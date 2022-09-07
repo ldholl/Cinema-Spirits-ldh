@@ -1,10 +1,10 @@
+//Global variables
 var keySearch = "";
 var movieObj
 
 var posterContainerEl = document.querySelector("#posters");
 
-//After a user searches for the movie they want, the API returns a list of movies that match (the correct movie is usually the first in the index). The Returned object also includes a link to a movie poster, which will probably be useful to us. We also get the imdb ID # from this, which will help us get the movie plot in the next function.
-
+//Event listener and function for button click **NOTE: might want to add alert for empty clicks
 $("#searchBtn").on("click", function (event){
     event.preventDefault();    
     keySearch = $(this).siblings("input").val();
@@ -16,8 +16,8 @@ var getMovieId = function(){
     var searchUrl = "https://imdb-api.com/en/API/SearchMovie/k_766k6kjr/" + keySearch;
 
     console.log(searchUrl);
-//make a get request to url
 
+//Fetch request
     fetch(searchUrl).then(function(response){
         console.log("response")
         response.json().then(function(data){
@@ -28,10 +28,10 @@ var getMovieId = function(){
     })
 };
 
-//important values from the 'results' array: id and image
 
+//Function to get the movie ids and posters
 var showMovies = function(){
-    //clear old content
+
     var posterContainerEl = document.getElementById("posters");
     
     for (i = 0; i < movieObj.length; i ++){
@@ -40,9 +40,9 @@ var showMovies = function(){
 
         //container for poster
         var posterEl = document.createElement("div");
+        //id of poster is the id we need to pull the plot in getMoviePlot
+        posterEl.id = movieObj[i].id;
         posterContainerEl.appendChild(posterEl);
-
-       
 
         var titleEl = document.createElement("span");
         titleEl.innerText = posterName;
@@ -51,10 +51,7 @@ var showMovies = function(){
         var picEl = document.createElement("img");
         picEl.src = imgLink;
         posterEl.appendChild(picEl);
-
-      
     }
-
 }
 
 
