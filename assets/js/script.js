@@ -17,7 +17,7 @@ var getMovieId = function(){
 
     console.log(searchUrl);
 
-//Fetch request
+    //Fetch request
     fetch(searchUrl).then(function(response){
         console.log("response")
         response.json().then(function(data){
@@ -34,6 +34,9 @@ var showMovies = function(){
 
     var posterContainerEl = document.getElementById("posters");
     
+    // Empties the inner HTML content of the poster container so the new search can populate its corresponding posters
+    posterContainerEl.innerHTML = "";
+
     for (i = 0; i < movieObj.length; i ++){
         var posterName = movieObj[i].title;
         var imgLink = movieObj[i].image;
