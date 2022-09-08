@@ -45,7 +45,8 @@ var showMovies = function(){
         var posterEl = document.createElement("div");
         //id of poster is the id we need to pull the plot in getMoviePlot
         posterEl.id = movieObj[i].id;
-        posterContainerEl.appendChild(posterEl);
+        posterEl.className = "col-3"
+       
 
         var titleEl = document.createElement("span");
         titleEl.innerText = posterName;
@@ -53,7 +54,10 @@ var showMovies = function(){
 
         var picEl = document.createElement("img");
         picEl.src = imgLink;
+        picEl.className = ".img-fluid"
         posterEl.appendChild(picEl);
+
+        posterContainerEl.appendChild(posterEl);
     }
 }
 
@@ -75,3 +79,4 @@ var getMoviePlot = function(imdbId){
 
 
 
+getMoviePlot("tt0091149");
