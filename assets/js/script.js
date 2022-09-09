@@ -3,6 +3,8 @@ var keySearch = "";
 var movieObj
 
 var posterContainerEl = document.querySelector("#posters");
+var modalEl = document.querySelector("#movie-modal");
+var moviePlotEl = document.querySelector(".movie-plot");
 
 //Event listener and function for button click **NOTE: might want to add alert for empty clicks
 $("#searchBtn").on("click", function (event){
@@ -12,8 +14,17 @@ $("#searchBtn").on("click", function (event){
     getMovieId(keySearch);  
 });
 
+//Event listener for displaying modal when user clicks on a movie poster
+posterContainerEl.addEventListener("click", function(event) {
+    if (event.target.matches(".img-fluid")) {
+        imdbId = event.target.parentElement.id;
+        getMoviePlot(imdbId);
+        plotDrinkModal();
+    }
+});
+
 var getMovieId = function(){
-    var searchUrl = "https://imdb-api.com/en/API/SearchMovie/k_766k6kjr/" + keySearch;
+    var searchUrl = "https://imdb-api.com/en/API/SearchMovie/k_hm16evk8/" + keySearch;
 
     console.log(searchUrl);
 
@@ -54,7 +65,7 @@ var showMovies = function(){
 
         var picEl = document.createElement("img");
         picEl.src = imgLink;
-        picEl.className = ".img-fluid"
+        picEl.className = "img-fluid"
         posterEl.appendChild(picEl);
 
         posterContainerEl.appendChild(posterEl);
@@ -66,17 +77,27 @@ var showMovies = function(){
 
 var getMoviePlot = function(imdbId){
     //format api url
-    var apiUrl = "https://imdb-api.com/en/API/Wikipedia/k_766k6kjr/" + imdbId;
+    var apiUrl = "https://imdb-api.com/en/API/Wikipedia/k_hm16evk8/" + imdbId;
     console.log(apiUrl)
     //make request to url
     fetch(apiUrl).then(function(response){
         response.json().then(function(data){
             console.log(data);
+            // Sets movie's short plot as modal's text
+            moviePlotEl.innerHTML = data.plotShort.plainText;
         });
     });
     
 };
 
+var plotDrinkModal = function() {
+    console.log("poster clicked");
+    modalEl.style.display = "block";
+};
 
-
-getMoviePlot("tt0091149");
+// When the user clicks anywhere outside of the modal, the modal closes
+window.onclick = function(event) {
+    if (event.target == modalEl) {
+      modalEl.style.display = "none";
+    }
+};
