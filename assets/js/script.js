@@ -6,6 +6,9 @@ var posterContainerEl = document.querySelector("#posters");
 var modalEl = document.querySelector("#movie-modal");
 var moviePlotEl = document.querySelector(".movie-plot");
 
+//API keys: Lacy: Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
+apiKey = "k_ag013nc0"
+
 //Event listener and function for button click **NOTE: might want to add alert for empty clicks
 $("#searchBtn").on("click", function (event){
     event.preventDefault();    
@@ -24,7 +27,7 @@ posterContainerEl.addEventListener("click", function(event) {
 });
 
 var getMovieId = function(){
-    var searchUrl = "https://imdb-api.com/en/API/SearchMovie/k_hm16evk8/" + keySearch;
+    var searchUrl = "https://imdb-api.com/en/API/SearchMovie/" + apiKey + "/" + keySearch;
 
     console.log(searchUrl);
 
@@ -33,7 +36,8 @@ var getMovieId = function(){
         console.log("response")
         response.json().then(function(data){
             console.log(data.results)
-            movieObj = data.results
+           movieObj = data.results
+            console.log(movieObj)
             showMovies();
         })
     })
@@ -49,24 +53,25 @@ var showMovies = function(){
     posterContainerEl.innerHTML = "";
 
     for (i = 0; i < movieObj.length; i ++){
-        var posterName = movieObj[i].title;
-        var imgLink = movieObj[i].image;
+        
+        
 
         //container for poster
         var posterEl = document.createElement("div");
         //id of poster is the id we need to pull the plot in getMoviePlot
         posterEl.id = movieObj[i].id;
-        posterEl.className = "col-3"
-       
+        posterEl.className = "column is-half-mobile is-one-third-tablet is-one-quarter-desktop"
 
-        var titleEl = document.createElement("span");
-        titleEl.innerText = posterName;
-        posterEl.appendChild(titleEl);
-
+        var imgLink = movieObj[i].image;
         var picEl = document.createElement("img");
         picEl.src = imgLink;
         picEl.className = "img-fluid"
         posterEl.appendChild(picEl);
+
+        var posterName = movieObj[i].title;
+        var titleEl = document.createElement("span");
+        titleEl.innerText = posterName;
+        posterEl.appendChild(titleEl);
 
         posterContainerEl.appendChild(posterEl);
     }
