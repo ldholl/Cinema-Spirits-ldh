@@ -19,7 +19,8 @@ $("#searchBtn").on("click", function (event){
 
 //Event listener for displaying modal when user clicks on a movie poster
 posterContainerEl.addEventListener("click", function(event) {
-    if (event.target.matches(".img-fluid")) {
+    if (event.target.matches(".poster-img")) {
+        console.log("click");
         imdbId = event.target.parentElement.id;
         getMoviePlot(imdbId);
         plotDrinkModal();
@@ -65,7 +66,7 @@ var showMovies = function(){
         var imgLink = movieObj[i].image;
         var picEl = document.createElement("img");
         picEl.src = imgLink;
-        picEl.className = "img-fluid"
+        picEl.className = "poster-img"
         posterEl.appendChild(picEl);
 
         var posterName = movieObj[i].title;

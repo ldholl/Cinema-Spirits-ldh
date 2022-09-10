@@ -1,17 +1,17 @@
 * {
 
     font-family: 'Limelight', sans-serif; 
-    color: #fff;
+    color: rgb(255, 236, 130);
     text-shadow:
-      0 0 7px #fff,
+      0 0 7px rgb(255, 255, 255),
       0 0 10px rgb(234, 216, 155),
       0 0 21px rgb(234, 216, 155),
       0 0 42px #feb813,
-      0 0 82px #feb813;
+      0 0 82px #feb013;
       background-image: url("https://cdn.pixabay.com/photo/2014/11/30/17/15/theater-551797_1280.jpg");
       background-size: cover;
       background-attachment: fixed;
-       background-position: 80%;
+      background-position: 80%;
       ;
   
   }
@@ -20,16 +20,14 @@
       font-family: "Limelight", sans-serif;
   }
   .hero {
-      padding-top: 30px;
-      padding-bottom: 50px;
-      padding-right: 40px;
-      padding-left: 40px;
-      margin-bottom: 50px;
+      margin-top: 30px;
+      width: 100%;
       display: inline-block;
   }
   
   .hero h1 {
       font-size: 60px;
+      background-image: 
      
   }
   
@@ -59,7 +57,7 @@
   }
   
   
-  img {
+  .poster-img {
   width: 400px;
   height: 550px;
   box-shadow:  0 0 7px #fff,
