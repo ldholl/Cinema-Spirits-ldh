@@ -14,10 +14,10 @@
   <section class="hero is-small">
     <div class="hero-body">
     <h1 class="title">Movie Night</h1> 
-    <h3>Search Films</h3>
     <form id="movie-search">
-      <button id="searchBtn" type="submit">Search</button>
-      <input type="text" />
+      <input type="text">
+      <br>
+      <button id="searchBtn" type="submit" class="search-btn">Search</button>
     </form>
   </div>
   </section>
@@ -28,9 +28,11 @@
 
   
   <div id="movie-modal" class="modal">
+    <div class="modal-background"></div>
     <div class="modal-content">
       <p class="movie-plot"></p>
     </div>
+    <button class="closeBtn">Close</button>
   </div>
 </main>
 <footer>
