@@ -12,10 +12,11 @@
 <body>
 
   <section class="hero">
-    <img id="marquee-img" img src="assets/images/marquee-1.png" />
+    <img id="marquee-img" src="assets/images/marquee-1.png" />
     <div class="hero-body">
     <h1 class="title">Movie Night</h1> 
     <form id="movie-search">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elit massa, ultricies rutrum semper sit amet, gravida vel turpis. Proin mattis ac lectus ut hendrerit. Morbi eget pharetra felis, a tempus nibh.</p>
       <input type="text">
       <br>
       <button id="searchBtn" type="submit" class="submit-btn">Search</button>
@@ -29,8 +30,18 @@
 
   
   <div id="movie-modal" class="modal">
-    <div class="modal-content">
-      <p class="movie-plot"></p>
+    <div id="modal-background"></div>
+    <div class="modal-card">
+      <header class = "modal-card-head">
+        <p class ="modal-card-title"></p>
+      </header>
+      <section class="modal-card-body">
+      <p class= "movie-plot"></p>
+      </section>
+      <footer class="modal-card-foot">
+      <button class="modal-close"></button>
+      <button class="modal-submit">Go</button>
+      </footer>
     </div>
   </div>
 </main>

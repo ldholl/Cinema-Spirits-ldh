@@ -12,11 +12,10 @@
       background-size: cover;
       background-attachment: fixed;
       background-position: 80%;
-      ;
+      
   
   }
-  
-  
+
   .hero input {
     font-family: "Limelight", sans-serif;
     font-size: 25px;
@@ -27,6 +26,7 @@
     0 0 21px inset #fff,
     0 0 42px inset #feb813;
   }
+
   #searchBtn {
       margin-top: 10px;
       font-family: "Limelight", sans-serif;
@@ -68,6 +68,19 @@
       color:rgba(17, 14, 47, 0.956) ;
       background-color:rgba(255, 255, 255, 0.699)   
   }
+
+  .hero form {
+    position: absolute;
+    top: 200px;
+    left: 700px; 
+  }
+
+  .hero p {
+  color:#fff;
+  font-size: 20px;
+  width: 75%;
+  }
+
   .hero-body {
     padding-top: 10px;
   
@@ -76,10 +89,12 @@
     height: 40px;
     font-size: 25px;
     font-family: "Limelight", sans-serif;
+    
   }
   .hero input {
     height: 40px;
-    color:rgba(17, 14, 47, 0.956)  
+    color:rgba(17, 14, 47, 0.956);
+    margin-top: 10px;  
   }
   .columns {
       margin-right: 40px;
@@ -95,7 +110,6 @@
       font-size: 30px;
   }
   
-  
   .poster-img {
   width: 400px;
   height: 550px;
@@ -110,46 +124,37 @@
       background-color: rgba(0, 0, 0, 0);
   }
 
-/* Everything Below is Taken From W3 Schools for Modals Tutorial, link for reference: https://www.w3schools.com/howto/howto_css_modals.asp */
-/* Comments and specific dimensions will be edited later to fit our application */
 
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+
+/* Modal */
+.modal-card {
+  background-color: rgb(192, 206, 218);
+  border: double rgba(17, 14, 47, 0.956);
+  box-shadow: 0 0 7px #fff,
+  0 0 10px #fff,
+  0 0 21px #fff,
+  0 0 42px #feb813,
+  0 0 42px #f0d49192
+}
+
+.movie-plot {
+  color:rgba(17, 14, 47, 0.956);
+  text-shadow: none;
+}
+
+.modal-suubmit {
+  text-align: center;
+  font-family: "Limelight", "sans-serif";
+  font-size: 40px;
+}
+
   
-  /* Modal Content/Box */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+
+.is-active  {
+background-image: url("https://cdn.pixabay.com/photo/2014/02/10/22/49/curtain-263731_1280.jpg")
+}
+
+  /* Media Queries */
 
   @media (max-width: 641px){
     #marquee-img {
