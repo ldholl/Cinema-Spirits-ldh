@@ -9,6 +9,7 @@ var posterContainerEl = document.querySelector("#posters");
 var modalEl = document.querySelector("#movie-modal");
 var moviePlotEl = document.querySelector(".movie-plot");
 var movieTitleEl = document.querySelector(".modal-card-title");
+var pastSearchesEl = document.querySelector(".past-searchlist")
 
 //API keys: k_g17k88h4 Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
 apiKey = "k_766k6kjr"
@@ -325,8 +326,12 @@ var loadSearches = function() {
 
     savedSearches = JSON.parse(savedSearches);
 
-    // Add way to implment displaying past searches to user, possibly as a dropdown menu below search bar?
-    console.log(savedSearches);
+    // Currently only displays the most recent search, needs refactoring
+    for (var i = 0; i <savedSearches.length; i++) {
+        searchedMovieEl = document.createElement("option");
+        searchedMovieEl.value = savedSearches[i];
+        pastSearchesEl.appendChild(searchedMovieEl);
+    }
 };
 
 loadSearches();

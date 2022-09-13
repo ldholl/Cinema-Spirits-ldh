@@ -16,7 +16,10 @@
     <h1 class="title">Movie Night</h1> 
     <form id="movie-search">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elit massa, ultricies rutrum semper sit amet, gravida vel turpis. Proin mattis ac lectus ut hendrerit. Morbi eget pharetra felis, a tempus nibh.</p>
-      <input type="text">
+      <input list="past-searches" type="text">
+      <datalist id="past-searches" class="past-searchlist">
+        <!-- Past searches go here -->
+      </datalist>
       <br>
       <button id="searchBtn" type="submit" class="submit-btn">Search</button>
     </form>
