@@ -2,14 +2,15 @@
 var keySearch = "";
 var movieObj
 var plot
+var finalPoster
 
 var posterContainerEl = document.querySelector("#posters");
 var modalEl = document.querySelector("#movie-modal");
 var moviePlotEl = document.querySelector(".movie-plot");
 var movieTitleEl = document.querySelector(".modal-card-title");
 
-//API keys: Lacy: Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
-apiKey = "k_ag013nc0"
+//API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
+apiKey = "k_766k6kjr"
 //cocktailDB key 9973533
 
 //Event listener and function for button click **NOTE: might want to add alert for empty clicks
@@ -96,6 +97,7 @@ var getMoviePlot = function(imdbId){
 posterContainerEl.addEventListener("click", function(event) {
     if (event.target.matches(".poster-img")) {
         imdbId = event.target.parentElement.id;
+        finalPoster = event.target.src;
         getMoviePlot(imdbId);
     }
 });
@@ -104,111 +106,188 @@ $(".modal-close").on("click", function(){
     $(".modal").removeClass("is-active");
 })
 //listener for submit
-$(".modal-submit").on("click", function(event){
-    event.preventDefault();
+$(".modal-submit").on("click", function(){
     $(".modal").removeClass("is-active");
-    location.href = "drink-movie.html"
+     
+    
+    console.log("click");
+    //location.href = "drink-movie.html";
+    $(".hero").remove();
+    $("#posters").remove();
+   
+    //checkKeywords();
     checkKeywords();
+    
 })
 
+var mainIngr
+var secondIngr
+
 var checkKeywords = function(){
+    
+    plot.split(" ");
+    console.log(plot)
     console.log("checking keywords")
-    var mainIngr = "";
+    mainIngr = "";
     switch (true){
         case plot.includes("japan" || "japanese" || "anime"):
-            mainIngr = "sake,";
+            mainIngr = "sake";
             break;
         case plot.includes ("italy" || "italian"):
-            mainIngr = "amaretto,";
+            mainIngr = "amaretto";
             break;
         case plot.includes ("russian" || "russia" || "soviet"):
-            mainIngr = "vodka,"
+            mainIngr = "vodka"
             break;
         case plot.includes ("french" || "france"):
-            mainIngr = "cognac,";
+            mainIngr = "cognac";
             break;
-        case plot.includes("chinese,"):
+        case plot.includes("chinese"):
             //something
             break
         case plot.includes ("german"):
-            mainIngr = "schnapps,"
+            mainIngr = "schnapps"
             break;
         case plot.includes("indian"):
-            mainIngr = "gin,"
+            mainIngr = "gin"
         case plot.includes ("portuguese" || "brazilian"):
             mainIngr = "rum"                
             break;
         case plot.includes ("american" || "irish"):
             mainIngr = "whiskey";
             break;
+        case plot.includes("southern"):
+            mainIngr = "bourbon";
+            break;
         case plot.includes ("british"):
-            mainIngr = "brandy,";
+            mainIngr = "brandy";
             break;
         default: break;
     };
 
-    var secondIngr = "";
+    secondIngr = "";
     switch(true){
         case plot.includes("action"):
             secondIngr = "";
             break;
         case plot.includes("mystery"):
-            //something
+            secondIngr = "vermouth";
             break;
         case plot.includes("crime"):
-            //something
+            secondIngr = "bitters";
             break;
         case plot.includes("fantasy"):
             //something
+            break;
+        case plot.includes("romance"):
+            secondIngr = "sugar";
             break;
         case plot.includes("science fiction"):
             //something
             break;
         default: break;
     }
-    getDrink();
+
+    console.log(mainIngr, secondIngr);
+    getDrink(mainIngr, secondIngr);
 }
 
 
-///Add api fetch here
-var finalposter = $("#landing-poster")
-var drinkImgEl = $("#drink-img");
-var drinkName = $("#drink-name");
-var recipe = $("#recipe");
+var getDrink = function(){
 
-
-var getDrink = function(mainIngr, secondIngr){
 console.log("fetching drinks")
-var mainIngr = "vodka,"
-var secondIngr = "orange_juice"
-var cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr + secondIngr;
+
+var cocktailApi = "";
+
+if (secondIngr === ""){
+    cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr
+}
+
+else if(mainIngr === ""){
+    cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + secondIngr
+}
+
+else {cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr + "," + secondIngr}
+
 console.log(cocktailApi);
 fetch(cocktailApi).then(function(response){
+    
     response.json().then(function(data){
+    //add in if statement for empty returns ****
     console.log(data);
     console.log(data.drinks.length)
+//if multiple matches, display random drink from returned list
     if (data.drinks.length > 1){
         var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
         console.log(data.drinks[0]);
-        drinkId = data.drinks[randNo].idDrink
+        drinkId = data.drinks[randNo].idDrink;
     }
     else {
-        drinkId = data.drinks.idDrink;
+        drinkId = data.drinks.idDrink;  
     }
+    console.log(drinkId)
     setPage(drinkId);
+    
     })
 })
 }
 
+
 var setPage = function(drinkId){
-var cocktailIdUrl = "www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=" + drinkId;
+    console.log("setting page")
+   
+    var cocktailIdUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=" + drinkId;
+  
     fetch(cocktailIdUrl).then(function(response){
     response.json().then(function(data){
     console.log(data);
-    //finalposter.src = 
-    drinkImgEl.src =  data.strDrinkThumb;
-    drinkName.innerHTML = data.strDrink;
-    recipe.innerHtml = strInstructions;  
+    var drinkInfo = data.drinks;
+    
+
+    var containerEl = document.getElementById("container");
+    containerEl.className = "display";
+
+    var finalImage = document.createElement("img");
+    finalImage.src = finalPoster;
+    finalImage.className = "final-poster";
+    
+    containerEl.appendChild(finalImage);
+
+
+    var cardEl = document.createElement("div");
+    cardEl.className= "cardEl";
+
+    containerEl.appendChild(cardEl);
+
+    
+    var finalTitle = document.createElement("h2");
+    console.log(drinkInfo[0].strDrink)
+    finalTitle.innerText = drinkInfo[0].strDrink;
+    finalTitle.className = "final-drink";
+
+    cardEl.appendChild(finalTitle)
+
+    var cardImgEl = document.createElement("div");
+    cardImgEl.className = "image-div";
+
+    cardEl.appendChild(cardImgEl);
+
+    var drinkEl = document.createElement("img");
+    console.log(drinkInfo[0].strDrinkThumb)
+    drinkEl.src = drinkInfo[0].strDrinkThumb;
+    drinkEl.className = "drink-image"
+
+    cardImgEl.appendChild(drinkEl);
+
+    var recipeEl = document.createElement("p");
+    recipeEl.innerText = drinkInfo[0].strInstructions;
+    recipeEl.className = "recipe";
+
+    cardEl.appendChild(recipeEl);
+
+    ///add in ingredients
+
+
 
         })
     })

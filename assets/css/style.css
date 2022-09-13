@@ -8,12 +8,16 @@
       0 0 21px rgb(234, 216, 155),
       0 0 42px #feb813,
       0 0 82px #feb013;
-      background-image: url("https://cdn.pixabay.com/photo/2014/11/30/17/15/theater-551797_1280.jpg");
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: 80%;
       
-  
+  }
+
+  body {
+    background-image: url("https://cdn.pixabay.com/photo/2014/11/30/17/15/theater-551797_1280.jpg");
+    background-color: black;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 80%;
+ 
   }
 
   .hero input {
@@ -66,7 +70,12 @@
       left: 133px;
       font-size: 60px; 
       color:rgba(17, 14, 47, 0.956) ;
-      background-color:rgba(255, 255, 255, 0.699)   
+      text-shadow:
+      0 0 7px rgb(255, 255, 255),
+      0 0 10px rgb(234, 216, 155),
+      0 0 21px rgb(234, 216, 155),
+      0 0 42px #feb813,
+      0 0 82px #feb013;   
   }
 
   .hero form {
@@ -148,11 +157,59 @@
   font-size: 40px;
 }
 
-  
-
 .is-active  {
 background-image: url("https://cdn.pixabay.com/photo/2014/02/10/22/49/curtain-263731_1280.jpg")
 }
+
+.display{
+  background-image: url("https://cdn.pixabay.com/photo/2014/02/10/22/49/curtain-263731_1280.jpg");
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 80%;
+  position: relative;
+}
+
+.final-poster {
+  
+  height: 850px;
+  width: auto;
+  position: absolute;
+  left: 5%;
+  top: 3%;
+  margin-top: 10px;
+  box-shadow:  0 0 7px #fff,
+  0 0 10px #fff,
+  0 0 21px #fff,
+  0 0 42px #feb813,
+  0 0 42px #f0d49192;
+  z-index: 1;
+ 
+}
+
+.cardEl {
+  margin-top: 10px;
+  position: absolute;
+  left: 40%;
+  top: 45%;
+  background-image: url("https://images.pexels.com/photos/3391752/pexels-photo-3391752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+  box-shadow: 0 0 50px 50px black ;
+  width: 100%;
+  height: auto;
+}
+
+.image-div {
+  width: 300px;
+  height: auto;
+  
+}
+#drink-image {
+  width: 300px;
+  height: auto;
+}
+
+
 
   /* Media Queries */
 
