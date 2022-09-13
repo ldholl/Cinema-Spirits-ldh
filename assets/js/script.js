@@ -3,14 +3,15 @@ var keySearch = "";
 var movieObj
 var plot
 var finalPoster
+var searches = [];
 
 var posterContainerEl = document.querySelector("#posters");
 var modalEl = document.querySelector("#movie-modal");
 var moviePlotEl = document.querySelector(".movie-plot");
 var movieTitleEl = document.querySelector(".modal-card-title");
 
-//API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
-apiKey = "k_g17k88h4"
+//API keys: k_g17k88h4 Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
+apiKey = "k_766k6kjr"
 //cocktailDB key 9973533
 
 //Event listener and function for button click **NOTE: might want to add alert for empty clicks
@@ -18,6 +19,8 @@ $("#searchBtn").on("click", function (event){
     event.preventDefault();    
     keySearch = $(this).siblings("input").val();
     
+    searches.push(keySearch)
+    saveSearches();
     getMovieId(keySearch);  
 });
 
@@ -33,6 +36,7 @@ var getMovieId = function(){
            movieObj = data.results
            
             showMovies();
+            
         })
     })
 };
@@ -123,7 +127,7 @@ $(".modal-submit").on("click", function(){
 var mainIngr
 var secondIngr
 
-var checkKeywords = function(){
+var checkKeywords = function() {
     
     plot.split(" ");
     console.log(plot)
@@ -190,49 +194,49 @@ var checkKeywords = function(){
 
     console.log(mainIngr, secondIngr);
     getDrink(mainIngr, secondIngr);
-}
+};
 
 
-var getDrink = function(){
+var getDrink = function() {
 
-console.log("fetching drinks")
+    console.log("fetching drinks")
 
-var cocktailApi = "";
+    var cocktailApi = "";
 
-if (secondIngr === ""){
-    cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr
-}
-
-else if(mainIngr === ""){
-    cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + secondIngr
-}
-
-else {cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr + "," + secondIngr}
-
-console.log(cocktailApi);
-
-
-fetch(cocktailApi).then(function(response){
-    
-    response.json().then(function(data){
-    //add in if statement for empty returns ****
-    console.log(data);
-    console.log(data.drinks.length)
-    var drinkId 
-//if multiple matches, display random drink from returned list
-    if (data.drinks.length > 1){
-        var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
-        console.log(data.drinks[0]);
-        drinkId = data.drinks[randNo].idDrink;
+    if (secondIngr === ""){
+        cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr
     }
-    else {
-        drinkId = data.drinks[0].idDrink;
+
+    else if(mainIngr === ""){
+        cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + secondIngr
     }
-    console.log(drinkId)
-    setPage(drinkId);
-    
+
+    else {cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr + "," + secondIngr}
+
+    console.log(cocktailApi);
+
+
+    fetch(cocktailApi).then(function(response){
+        
+        response.json().then(function(data){
+        //add in if statement for empty returns ****
+        console.log(data);
+        console.log(data.drinks.length)
+        var drinkId 
+    //if multiple matches, display random drink from returned list
+        if (data.drinks.length > 1){
+            var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
+            console.log(data.drinks[0]);
+            drinkId = data.drinks[randNo].idDrink;
+        }
+        else {
+            drinkId = data.drinks[0].idDrink;
+        }
+        console.log(drinkId)
+        setPage(drinkId);
+        
+        })
     })
-})
 }
 
 
@@ -307,3 +311,22 @@ var setPage = function(drinkId){
         })
     })
 }
+
+var saveSearches = function () {
+    localStorage.setItem("searched-movies", JSON.stringify(searches))
+};
+
+var loadSearches = function() {
+    savedSearches = localStorage.getItem("searched-movies");
+
+    if (!savedSearches) {
+        return false;
+    }
+
+    savedSearches = JSON.parse(savedSearches);
+
+    // Add way to implment displaying past searches to user, possibly as a dropdown menu below search bar?
+    console.log(savedSearches);
+};
+
+loadSearches();
