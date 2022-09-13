@@ -10,7 +10,7 @@ var moviePlotEl = document.querySelector(".movie-plot");
 var movieTitleEl = document.querySelector(".modal-card-title");
 
 //API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
-apiKey = "k_766k6kjr"
+apiKey = "k_g17k88h4"
 //cocktailDB key 9973533
 
 //Event listener and function for button click **NOTE: might want to add alert for empty clicks
@@ -57,7 +57,7 @@ var showMovies = function(){
         var imgLink = movieObj[i].image;
         var picEl = document.createElement("img");
         picEl.src = imgLink;
-        picEl.className = "poster-img"
+        picEl.className = "poster-img image is 2by3"
         posterEl.appendChild(picEl);
 
         var posterName = movieObj[i].title;
@@ -74,7 +74,7 @@ var showMovies = function(){
 
 var getMoviePlot = function(imdbId){
     //format api url
-    var apiUrl = "https://imdb-api.com/en/API/Wikipedia/k_hm16evk8/" + imdbId;
+    var apiUrl = "https://imdb-api.com/en/API/Wikipedia/" + apiKey + "/" + imdbId;
    
     //make request to url
     fetch(apiUrl).then(function(response){
@@ -210,12 +210,15 @@ else if(mainIngr === ""){
 else {cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr + "," + secondIngr}
 
 console.log(cocktailApi);
+
+
 fetch(cocktailApi).then(function(response){
     
     response.json().then(function(data){
     //add in if statement for empty returns ****
     console.log(data);
     console.log(data.drinks.length)
+    var drinkId 
 //if multiple matches, display random drink from returned list
     if (data.drinks.length > 1){
         var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
@@ -223,7 +226,7 @@ fetch(cocktailApi).then(function(response){
         drinkId = data.drinks[randNo].idDrink;
     }
     else {
-        drinkId = data.drinks.idDrink;  
+        drinkId = data.drinks[0].idDrink;
     }
     console.log(drinkId)
     setPage(drinkId);
@@ -236,62 +239,71 @@ fetch(cocktailApi).then(function(response){
 var setPage = function(drinkId){
     console.log("setting page")
    
+   
     var cocktailIdUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=" + drinkId;
   
     fetch(cocktailIdUrl).then(function(response){
-    response.json().then(function(data){
-    console.log(data);
-    var drinkInfo = data.drinks;
-    
+        response.json().then(function(data){
+        
+        var drinkInfo = data.drinks;
 
-    var containerEl = document.getElementById("container");
-    containerEl.className = "display";
+        var containerEl = document.getElementById("holder");
+        containerEl.className = "holder";
+
+    var imageCard = document.createElement("div");
+    imageCard.className = "poster-card";
+    containerEl.appendChild(imageCard);
 
     var finalImage = document.createElement("img");
     finalImage.src = finalPoster;
     finalImage.className = "final-poster";
     
-    containerEl.appendChild(finalImage);
-
+    imageCard.appendChild(finalImage);
 
     var cardEl = document.createElement("div");
-    cardEl.className= "cardEl";
+    cardEl.className = "card-el";
+    containerEl.appendChild(cardEl)
+    
+    var drinkCardEl = document.createElement("div");
+    drinkCardEl.className= "tile drink-card is-vertical";
 
-    containerEl.appendChild(cardEl);
+    cardEl.appendChild(drinkCardEl);
 
     
     var finalTitle = document.createElement("h2");
     console.log(drinkInfo[0].strDrink)
     finalTitle.innerText = drinkInfo[0].strDrink;
-    finalTitle.className = "final-drink";
+    finalTitle.className = "tile";
+    finalTitle.id = "final-drink"
 
-    cardEl.appendChild(finalTitle)
+    drinkCardEl.appendChild(finalTitle)
 
     var cardImgEl = document.createElement("div");
-    cardImgEl.className = "image-div";
+    cardImgEl.className = "tile is-parent";
+    cardImgEl.id = "image-div"
 
-    cardEl.appendChild(cardImgEl);
+    drinkCardEl.appendChild(cardImgEl);
 
     var drinkEl = document.createElement("img");
     console.log(drinkInfo[0].strDrinkThumb)
     drinkEl.src = drinkInfo[0].strDrinkThumb;
-    drinkEl.className = "drink-image"
+    drinkEl.className = "tile is-child";
+    drinkEl.id = "drink-image";
 
     cardImgEl.appendChild(drinkEl);
 
     var recipeEl = document.createElement("p");
     recipeEl.innerText = drinkInfo[0].strInstructions;
-    recipeEl.className = "recipe";
+    recipeEl.className = "tile";
+    recipeEl.id = "recipe"
 
-    cardEl.appendChild(recipeEl);
+    drinkCardEl.appendChild(recipeEl);
 
     ///add in ingredients
+
 
 
 
         })
     })
 }
-
-
-
