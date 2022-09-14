@@ -4,6 +4,7 @@ var movieObj
 var plot
 var finalPoster
 var searches = [];
+var imdbId;
 
 var posterContainerEl = document.querySelector("#posters");
 var modalEl = document.querySelector("#movie-modal");
@@ -12,8 +13,8 @@ var movieTitleEl = document.querySelector(".modal-card-title");
 var pastSearchesEl = document.querySelector(".past-searchlist")
 
 
-//API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 k_g17k88h4 Jonathan: k_hm16evk8
-apiKey = "k_hm16evk8"
+//API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 k_g17k88h4 k_k97mdcmz Jonathan: k_hm16evk8
+apiKey = "k_k97mdcmz"
 
 
 //cocktailDB key 9973533
@@ -27,6 +28,13 @@ $("#searchBtn").on("click", function (event){
     saveSearches();
     getMovieId(keySearch);  
 });
+
+$("#randomBtn").on("click", function(event){
+    event.preventDefault();
+    $(".hero").remove();
+    $("#posters").remove();
+    randomMovie();
+})
 
 
 var getMovieId = function(){
@@ -79,7 +87,38 @@ var showMovies = function(){
     }
 }
 
+var randomMovie = function(){
+    var randomMovieUrl = "https://imdb-api.com/en/API/Top250Movies/" + apiKey
+    fetch(randomMovieUrl).then(function(response){
+        response.json().then(function(data){
+            var randNo = Math.floor(Math.random() * data.items.length)
+            
+            imdbId = data.items[randNo].id;
+           
+            
 
+            var apiUrl = "https://imdb-api.com/en/API/Wikipedia/" + apiKey + "/" + imdbId;
+            fetch(apiUrl).then(function(response){
+                response.json().then(function(data){
+                    plot = data.plotShort.plainText;
+                    plot = plot.toLowerCase();
+
+            var randomPosterUrl = "https://imdb-api.com/API/Posters/" + apiKey + "/" + imdbId;
+            fetch(randomPosterUrl).then(function(response){
+                response.json().then(function(data){
+                    var posterObj = data.posters[0];
+                    finalPoster = posterObj["link"]
+
+                    checkKeywords();
+                })
+            })
+
+                    
+                })
+            })
+        })
+    })
+}
 //Retrieves the plot of the movie in an object. We can later edit this function to only return the "short" or "long" plot, depending on what we need. *Note to self: add a call to the function
 
 var getMoviePlot = function(imdbId){

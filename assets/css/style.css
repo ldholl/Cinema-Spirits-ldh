@@ -26,6 +26,15 @@ body {
   font-family: "Limelight"
 }
 
+.hero h1 {
+font-size: 50px;
+}
+
+#movie-search p {
+  color: white;
+  font-size: 25px;
+  text-shadow: none;
+}
 #movie-search input {
   color: black;
   font-family: "Limelight";
@@ -40,6 +49,7 @@ body {
 
 #movie-search button {
   color: black;
+  text-align: center;
   font-family: "Limelight";
   font-size: 20px;
   background-color: #fee313b4;
@@ -47,7 +57,7 @@ body {
     0 0 10px rgb(234, 216, 155),
     0 0 21px rgb(234, 216, 155);
     height: 40px;
-    width: 100px;
+    width: 170px;
     margin-top: 10px;
     border-radius: 10px;
 }
