@@ -3,14 +3,19 @@ var keySearch = "";
 var movieObj
 var plot
 var finalPoster
+var searches = [];
 
 var posterContainerEl = document.querySelector("#posters");
 var modalEl = document.querySelector("#movie-modal");
 var moviePlotEl = document.querySelector(".movie-plot");
 var movieTitleEl = document.querySelector(".modal-card-title");
+var pastSearchesEl = document.querySelector(".past-searchlist")
+
 
 //API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 k_g17k88h4 Jonathan: k_hm16evk8
 apiKey = "k_g17k88h4"
+
+
 //cocktailDB key 9973533
 
 //Event listener and function for button click **NOTE: might want to add alert for empty clicks
@@ -18,6 +23,8 @@ $("#searchBtn").on("click", function (event){
     event.preventDefault();    
     keySearch = $(this).siblings("input").val();
     
+    searches.push(keySearch)
+    saveSearches();
     getMovieId(keySearch);  
 });
 
@@ -35,6 +42,7 @@ var getMovieId = function(){
 
            
             showMovies();
+            
         })
     })
 };
@@ -107,6 +115,10 @@ posterContainerEl.addEventListener("click", function(event) {
 $(".modal-close").on("click", function(){
     $(".modal").removeClass("is-active");
 })
+//listener for clicking off of modal
+$(document).on("click" , function() {
+    $(".modal").removeClass("is-active");
+})
 //listener for submit
 $(".modal-submit").on("click", function(){
     $(".modal").removeClass("is-active");
@@ -125,37 +137,40 @@ $(".modal-submit").on("click", function(){
 var mainIngr
 var secondIngr
 
-var checkKeywords = function(){
+var checkKeywords = function() {
     
     plot.split(" ");
     console.log(plot)
     console.log("checking keywords")
     mainIngr = "";
     switch (true){
-        case plot.includes("japan" || "japanese" || "anime"):
-            mainIngr = "sake";
+        case plot.includes("japan" || "japanese" || "anime" || "tokyo"):
+            mainIngr = "Midori melon liqueur"; // sake was not an ingredient listed in the API, subbed for Midori for the next closest Japan-related ingredient
             break;
-        case plot.includes ("italy" || "italian"):
+        case plot.includes ("italy" || "italian" || "renaissance" || "italia" || "rome"):
             mainIngr = "amaretto";
             break;
-        case plot.includes ("russian" || "russia" || "soviet"):
-            mainIngr = "vodka"
+        case plot.includes ("russian" || "russia" || "soviet" || "USSR" || "berlin"):
+            mainIngr = "vodka";
             break;
-        case plot.includes ("french" || "france"):
+        case plot.includes ("french" || "france" || "paris" || "eiffel tower"):
             mainIngr = "cognac";
-            break;
-        case plot.includes("chinese"):
-            //something
             break;
         case plot.includes ("german"):
             mainIngr = "jagermeister"
             break;
         case plot.includes("drama"):
             mainIngr = "triple_sec";
+        case plot.includes("chinese" || "china" || "cantonese" || "mandarin"):
+            mainIngr = "tea";
+            break
+        case plot.includes("korea" || "korean" || "kdrama"):
+            mainIngr = "yoghurt"; // soju was not a listed ingredient, subbed for yoghurt (closet to yakult)
             break;
-        case plot.includes("indian"):
-            mainIngr = "gin"
-        case plot.includes ("portuguese" || "brazilian"):
+        case plot.includes("indian" || "india" || "bangladesh" || "bengali"):
+            mainIngr = "gin";
+            break;
+        case plot.includes ("portuguese" || "brazilian" || "spanish"):
             mainIngr = "rum"                
             break;
         case plot.includes ("irish"):
@@ -164,7 +179,7 @@ var checkKeywords = function(){
         case plot.includes("southern"):
             mainIngr = "bourbon";
             break;
-        case plot.includes ("british"):
+        case plot.includes ("british" || "britain" || "wales" || "welsh"):
             mainIngr = "brandy";
             break;
         default: break;
@@ -181,7 +196,7 @@ var checkKeywords = function(){
         case plot.includes("animation"):
             secondIngr = "orange_juice";
             break;
-        case plot.includes("mystery"):
+        case plot.includes("mystery" || "thriller" || "psychological"):
             secondIngr = "vermouth";
             break;
         case plot.includes("historical"):
@@ -190,28 +205,30 @@ var checkKeywords = function(){
         case plot.includes("crime"):
             secondIngr = "bitters";
             break;
-        case plot.includes("fantasy"):
+        case plot.includes("fantasy" || "fantastical"):
             secondIngr = "grenadine";
             break;
         case plot.includes("romance" || "romantic"):
             secondIngr = "sugar";
             break;
-        case plot.includes("science fiction"):
+        case plot.includes("science-fiction"):
             secondIngr = "sour";
+        case plot.includes("biographical"):
+            secondIngr = "champagne";
             break;
         default: break;
     }
 
     console.log(mainIngr, secondIngr);
     getDrink(mainIngr, secondIngr);
-}
+};
 
 
-var getDrink = function(){
+var getDrink = function() {
 
-console.log("fetching drinks")
+    console.log("fetching drinks")
 
-var cocktailApi = "";
+    var cocktailApi = "";
 
 if (secondIngr === ""){
     cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr
@@ -249,12 +266,33 @@ fetch(cocktailApi).then(function(response){
     else {
         drinkId = data.drinks[0].idDrink;
     }
-    console.log(drinkId)
-    setPage(drinkId);
-    
+
+
+    console.log(cocktailApi);
+
+
+    fetch(cocktailApi).then(function(response){
+        
+        response.json().then(function(data){
+        //add in if statement for empty returns ****
+        console.log(data);
+        console.log(data.drinks.length)
+        var drinkId 
+    //if multiple matches, display random drink from returned list
+        if (data.drinks.length > 1){
+            var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
+            console.log(data.drinks[0]);
+            drinkId = data.drinks[randNo].idDrink;
+        }
+        else {
+            drinkId = data.drinks[0].idDrink;
+        }
+        console.log(drinkId)
+        setPage(drinkId);
+        
+        })
     })
-})
-}
+
 
 
 var setPage = function(drinkId){
@@ -357,3 +395,35 @@ var setPage = function(drinkId){
         })
     })
 }
+
+var listPastSearch = function(keySearch) {
+    // Does not list searched movie if already previously searched
+    if (searches.includes(keySearch)) {
+        return false;
+    }
+    
+    searches.push(keySearch);
+    searchedMovieEl = document.createElement("option");
+    searchedMovieEl.value = keySearch;
+    pastSearchesEl.appendChild(searchedMovieEl);
+};
+
+var saveSearches = function () {
+    localStorage.setItem("searched-movies", JSON.stringify(searches));
+};
+
+var loadSearches = function() {
+    savedSearches = localStorage.getItem("searched-movies");
+
+    if (!savedSearches) {
+        return false;
+    }
+
+    savedSearches = JSON.parse(savedSearches);
+
+    for (var i = 0; i <savedSearches.length; i++) {
+        listPastSearch(savedSearches[i]);
+    }
+};
+
+loadSearches();
