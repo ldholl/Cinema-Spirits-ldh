@@ -135,16 +135,16 @@ var checkKeywords = function() {
     console.log("checking keywords")
     mainIngr = "";
     switch (true){
-        case plot.includes("japan" || "japanese" || "anime"):
+        case plot.includes("japan" || "japanese" || "anime" || "tokyo"):
             mainIngr = "sake";
             break;
         case plot.includes ("italy" || "italian" || "renaissance" || "italia" || "rome"):
             mainIngr = "amaretto";
             break;
-        case plot.includes ("russian" || "russia" || "soviet" || "USSR"):
+        case plot.includes ("russian" || "russia" || "soviet" || "USSR" || "berlin"):
             mainIngr = "vodka"
             break;
-        case plot.includes ("french" || "france" || "paris"):
+        case plot.includes ("french" || "france" || "paris" || "eiffel tower"):
             mainIngr = "cognac";
             break;
         case plot.includes("chinese" || "china" || "cantonese" || "mandarin"):
@@ -162,7 +162,7 @@ var checkKeywords = function() {
         case plot.includes ("portuguese" || "brazilian" || "spanish"):
             mainIngr = "rum"                
             break;
-        case plot.includes ("american" || "irish"):
+        case plot.includes ("american" || "irish" || "ireland"):
             mainIngr = "whiskey";
             break;
         case plot.includes("southern"):
