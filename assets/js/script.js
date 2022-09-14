@@ -136,7 +136,7 @@ var checkKeywords = function() {
     mainIngr = "";
     switch (true){
         case plot.includes("japan" || "japanese" || "anime" || "tokyo"):
-            mainIngr = "sake";
+            mainIngr = "Midori melon liqueur"; // sake was not an ingredient listed in the API, subbed for Midori for the next closest Japan-related ingredient
             break;
         case plot.includes ("italy" || "italian" || "renaissance" || "italia" || "rome"):
             mainIngr = "amaretto";
@@ -148,13 +148,13 @@ var checkKeywords = function() {
             mainIngr = "cognac";
             break;
         case plot.includes("chinese" || "china" || "cantonese" || "mandarin"):
-            mainIngr = "baijiu";
+            mainIngr = "tea";
             break
         case plot.includes("korea" || "korean" || "kdrama"):
-            mainIngr = "soju";
+            mainIngr = "Yoghurt"; // soju was not a listed ingredient, subbed for yoghurt (closet to yakult)
             break;
         case plot.includes ("german" || "deutsche" || "germany"):
-            mainIngr = "schnapps";
+            mainIngr = "strawberry schnapps"; // schnapps was not a listed ingredient, subbed for strawberry schnapps
             break;
         case plot.includes("indian" || "india" || "bangladesh" || "bengali"):
             mainIngr = "gin";
