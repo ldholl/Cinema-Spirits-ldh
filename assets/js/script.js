@@ -9,7 +9,7 @@ var modalEl = document.querySelector("#movie-modal");
 var moviePlotEl = document.querySelector(".movie-plot");
 var movieTitleEl = document.querySelector(".modal-card-title");
 
-//API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
+//API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 k_g17k88h4 Jonathan: k_hm16evk8
 apiKey = "k_g17k88h4"
 //cocktailDB key 9973533
 
@@ -31,6 +31,8 @@ var getMovieId = function(){
         response.json().then(function(data){
            
            movieObj = data.results
+           console.log(movieObj)
+
            
             showMovies();
         })
@@ -144,17 +146,20 @@ var checkKeywords = function(){
             break;
         case plot.includes("chinese"):
             //something
-            break
+            break;
         case plot.includes ("german"):
-            mainIngr = "schnapps"
+            mainIngr = "jagermeister"
+            break;
+        case plot.includes("drama"):
+            mainIngr = "triple_sec";
             break;
         case plot.includes("indian"):
             mainIngr = "gin"
         case plot.includes ("portuguese" || "brazilian"):
             mainIngr = "rum"                
             break;
-        case plot.includes ("american" || "irish"):
-            mainIngr = "whiskey";
+        case plot.includes ("irish"):
+            mainIngr = "whisky";
             break;
         case plot.includes("southern"):
             mainIngr = "bourbon";
@@ -168,22 +173,31 @@ var checkKeywords = function(){
     secondIngr = "";
     switch(true){
         case plot.includes("action"):
-            secondIngr = "";
+            secondIngr = "lime_juice";
+            break;
+        case plot.includes("adventure"):
+            secondIngr = "lemon_juice";
+            break;
+        case plot.includes("animation"):
+            secondIngr = "orange_juice";
             break;
         case plot.includes("mystery"):
             secondIngr = "vermouth";
+            break;
+        case plot.includes("historical"):
+            secondIngr = "cinnamon";
             break;
         case plot.includes("crime"):
             secondIngr = "bitters";
             break;
         case plot.includes("fantasy"):
-            //something
+            secondIngr = "grenadine";
             break;
-        case plot.includes("romance"):
+        case plot.includes("romance" || "romantic"):
             secondIngr = "sugar";
             break;
         case plot.includes("science fiction"):
-            //something
+            secondIngr = "sour";
             break;
         default: break;
     }
@@ -206,6 +220,9 @@ if (secondIngr === ""){
 else if(mainIngr === ""){
     cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + secondIngr
 }
+else if (mainIngr ==="" && secondIngr === ""){
+    cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/random.php"
+}
 
 else {cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr + "," + secondIngr}
 
@@ -217,14 +234,18 @@ fetch(cocktailApi).then(function(response){
     response.json().then(function(data){
     //add in if statement for empty returns ****
     console.log(data);
-    console.log(data.drinks.length)
-    var drinkId 
+//**** how to code this
+    if (!data){"no matchs"}
+    
+    var drinkIndex 
 //if multiple matches, display random drink from returned list
     if (data.drinks.length > 1){
         var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
-        console.log(data.drinks[0]);
-        drinkId = data.drinks[randNo].idDrink;
+        console.log(randNo);
+        drinkIndex = data.drinks[randNo];
+        drinkId = drinkIndex.idDrink;
     }
+
     else {
         drinkId = data.drinks[0].idDrink;
     }
@@ -248,10 +269,11 @@ var setPage = function(drinkId){
         var drinkInfo = data.drinks;
 
         var containerEl = document.getElementById("holder");
-        containerEl.className = "holder";
+        document.body.style.backgroundImage = "url('https://images.pexels.com/photos/3391752/pexels-photo-3391752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')"
+        containerEl.className = "columns is-centered is-vcentered";
 
     var imageCard = document.createElement("div");
-    imageCard.className = "poster-card";
+    imageCard.className = "column is-4 poster-card";
     containerEl.appendChild(imageCard);
 
     var finalImage = document.createElement("img");
@@ -261,11 +283,11 @@ var setPage = function(drinkId){
     imageCard.appendChild(finalImage);
 
     var cardEl = document.createElement("div");
-    cardEl.className = "card-el";
+    cardEl.className = "card-el column is-4";
     containerEl.appendChild(cardEl)
     
     var drinkCardEl = document.createElement("div");
-    drinkCardEl.className= "tile drink-card is-vertical";
+    drinkCardEl.className= "drink-card";
 
     cardEl.appendChild(drinkCardEl);
 
@@ -273,13 +295,11 @@ var setPage = function(drinkId){
     var finalTitle = document.createElement("h2");
     console.log(drinkInfo[0].strDrink)
     finalTitle.innerText = drinkInfo[0].strDrink;
-    finalTitle.className = "tile";
-    finalTitle.id = "final-drink"
+    finalTitle.id = "final-name"
 
     drinkCardEl.appendChild(finalTitle)
 
     var cardImgEl = document.createElement("div");
-    cardImgEl.className = "tile is-parent";
     cardImgEl.id = "image-div"
 
     drinkCardEl.appendChild(cardImgEl);
@@ -287,22 +307,52 @@ var setPage = function(drinkId){
     var drinkEl = document.createElement("img");
     console.log(drinkInfo[0].strDrinkThumb)
     drinkEl.src = drinkInfo[0].strDrinkThumb;
-    drinkEl.className = "tile is-child";
     drinkEl.id = "drink-image";
 
     cardImgEl.appendChild(drinkEl);
 
-    var recipeEl = document.createElement("p");
-    recipeEl.innerText = drinkInfo[0].strInstructions;
-    recipeEl.className = "tile";
-    recipeEl.id = "recipe"
+    var ingredientsEl = document.createElement("ul");
+    ingredientsEl.innerText = "Ingredients: ";
+    ingredientsEl.className = "Ingredients"
+    drinkCardEl.appendChild(ingredientsEl);
 
-    drinkCardEl.appendChild(recipeEl);
+    if (drinkInfo[0].strIngredient1 !== null){
+        var ingredient1 = document.createElement("li");
+        ingredient1.innerText = drinkInfo[0].strIngredient1;
+        ingredient1.className = "ingredient-item"
+        ingredientsEl.appendChild(ingredient1);
+    }
+    if (drinkInfo[0].strIngredient2 !== null){
+        var ingredient2 = document.createElement("li");
+        ingredient2.innerText = drinkInfo[0].strIngredient2;
+        ingredient2.className = "ingredient-item"
+        ingredientsEl.appendChild(ingredient2);
+    }
+    if (drinkInfo[0].strIngredient3 !== null){
+        var ingredient3 = document.createElement("li");
+        ingredient3.innerText = drinkInfo[0].strIngredient3;
+        ingredient3.className = "ingredient-item"
+        ingredientsEl.appendChild(ingredient3);
+    }
+    if (drinkInfo[0].strIngredient4 !== null){
+        var ingredient4 = document.createElement("li");
+        ingredient4.innerText = drinkInfo[0].strIngredient4;
+        ingredient4.className = "ingredient-item"
+        ingredientsEl.appendChild(ingredient4)
+        
+    }
+    if (drinkInfo[0].strIngredient5 !== null){
+    var ingredient5 = document.createElement("li");
+    ingredient5.innerText = drinkInfo[0].strIngredient5;
+    ingredient5.className = "ingredient-item"
+    ingredientsEl.appendChild(ingredient5)
+   }
 
-    ///add in ingredients
+   var recipeEl = document.createElement("p");
+   recipeEl.innerText = drinkInfo[0].strInstructions;
+   recipeEl.id = "recipe"
 
-
-
+   drinkCardEl.appendChild(recipeEl)
 
         })
     })
