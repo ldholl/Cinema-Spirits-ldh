@@ -141,21 +141,25 @@ var checkKeywords = function() {
         case plot.includes ("italy" || "italian"):
             mainIngr = "amaretto";
             break;
-        case plot.includes ("russian" || "russia" || "soviet"):
+        case plot.includes ("russian" || "russia" || "soviet" || "USSR"):
             mainIngr = "vodka"
             break;
         case plot.includes ("french" || "france"):
             mainIngr = "cognac";
             break;
-        case plot.includes("chinese"):
-            //something
+        case plot.includes("chinese" || "china" || "cantonese" || "mandarin"):
+            mainIngr = "baijiu";
             break
-        case plot.includes ("german"):
-            mainIngr = "schnapps"
+        case plot.includes("korea" || "korean" || "kdrama"):
+            mainIngr = "soju";
             break;
-        case plot.includes("indian"):
-            mainIngr = "gin"
-        case plot.includes ("portuguese" || "brazilian"):
+        case plot.includes ("german" || "deutsche" || "germany"):
+            mainIngr = "schnapps";
+            break;
+        case plot.includes("indian" || "india" || "bangladesh" || "bengali"):
+            mainIngr = "gin";
+            break;
+        case plot.includes ("portuguese" || "brazilian" || "spanish"):
             mainIngr = "rum"                
             break;
         case plot.includes ("american" || "irish"):
@@ -172,23 +176,23 @@ var checkKeywords = function() {
 
     secondIngr = "";
     switch(true){
-        case plot.includes("action"):
+        case plot.includes("action" || "adventure"):
             secondIngr = "";
             break;
-        case plot.includes("mystery"):
+        case plot.includes("mystery" || "thriller" || "psychological"):
             secondIngr = "vermouth";
             break;
         case plot.includes("crime"):
             secondIngr = "bitters";
             break;
         case plot.includes("fantasy"):
-            //something
+            secondIngr = "champagne";
             break;
         case plot.includes("romance"):
             secondIngr = "sugar";
             break;
         case plot.includes("science fiction"):
-            //something
+            secondIngr = "carbonated water"
             break;
         default: break;
     }
