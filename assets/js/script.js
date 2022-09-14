@@ -12,7 +12,7 @@ var movieTitleEl = document.querySelector(".modal-card-title");
 var pastSearchesEl = document.querySelector(".past-searchlist")
 
 //API keys: k_g17k88h4 Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 Jonathan: k_hm16evk8
-apiKey = "k_766k6kjr"
+apiKey = "k_ag013nc0"
 //cocktailDB key 9973533
 
 //Event listener and function for button click **NOTE: might want to add alert for empty clicks
@@ -110,6 +110,10 @@ posterContainerEl.addEventListener("click", function(event) {
 $(".modal-close").on("click", function(){
     $(".modal").removeClass("is-active");
 })
+//listener for clicking off of modal
+$(document).on("click" , function() {
+    $(".modal").removeClass("is-active");
+})
 //listener for submit
 $(".modal-submit").on("click", function(){
     $(".modal").removeClass("is-active");
@@ -142,7 +146,7 @@ var checkKeywords = function() {
             mainIngr = "amaretto";
             break;
         case plot.includes ("russian" || "russia" || "soviet" || "USSR" || "berlin"):
-            mainIngr = "vodka"
+            mainIngr = "vodka";
             break;
         case plot.includes ("french" || "france" || "paris" || "eiffel tower"):
             mainIngr = "cognac";
@@ -317,7 +321,7 @@ var setPage = function(drinkId){
     })
 }
 
-listPastSearch = function(keySearch) {
+var listPastSearch = function(keySearch) {
     // Does not list searched movie if already previously searched
     if (searches.includes(keySearch)) {
         return false;
