@@ -245,32 +245,6 @@ else {cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.ph
 
 console.log(cocktailApi);
 
-
-fetch(cocktailApi).then(function(response){
-    
-    response.json().then(function(data){
-    //add in if statement for empty returns ****
-    console.log(data);
-//**** how to code this
-    if (!data){"no matchs"}
-    
-    var drinkIndex 
-//if multiple matches, display random drink from returned list
-    if (data.drinks.length > 1){
-        var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
-        console.log(randNo);
-        drinkIndex = data.drinks[randNo];
-        drinkId = drinkIndex.idDrink;
-    }
-
-    else {
-        drinkId = data.drinks[0].idDrink;
-    }
-
-
-    console.log(cocktailApi);
-
-
     fetch(cocktailApi).then(function(response){
         
         response.json().then(function(data){
@@ -292,7 +266,7 @@ fetch(cocktailApi).then(function(response){
         
         })
     })
-
+}
 
 
 var setPage = function(drinkId){
@@ -396,6 +370,7 @@ var setPage = function(drinkId){
     })
 }
 
+/*
 var listPastSearch = function(keySearch) {
     // Does not list searched movie if already previously searched
     if (searches.includes(keySearch)) {
@@ -425,5 +400,6 @@ var loadSearches = function() {
         listPastSearch(savedSearches[i]);
     }
 };
-
+    
 loadSearches();
+*/
