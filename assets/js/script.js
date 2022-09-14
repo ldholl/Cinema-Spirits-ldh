@@ -313,8 +313,20 @@ var setPage = function(drinkId){
     })
 }
 
+listPastSearch = function(keySearch) {
+    // Does not list searched movie if already previously searched
+    if (searches.includes(keySearch)) {
+        return false;
+    }
+    
+    searches.push(keySearch);
+    searchedMovieEl = document.createElement("option");
+    searchedMovieEl.value = keySearch;
+    pastSearchesEl.appendChild(searchedMovieEl);
+};
+
 var saveSearches = function () {
-    localStorage.setItem("searched-movies", JSON.stringify(searches))
+    localStorage.setItem("searched-movies", JSON.stringify(searches));
 };
 
 var loadSearches = function() {
@@ -326,11 +338,8 @@ var loadSearches = function() {
 
     savedSearches = JSON.parse(savedSearches);
 
-    // Currently only displays the most recent search, needs refactoring
     for (var i = 0; i <savedSearches.length; i++) {
-        searchedMovieEl = document.createElement("option");
-        searchedMovieEl.value = savedSearches[i];
-        pastSearchesEl.appendChild(searchedMovieEl);
+        listPastSearch(savedSearches[i]);
     }
 };
 
