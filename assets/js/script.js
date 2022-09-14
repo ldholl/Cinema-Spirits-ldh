@@ -138,13 +138,13 @@ var checkKeywords = function() {
         case plot.includes("japan" || "japanese" || "anime"):
             mainIngr = "sake";
             break;
-        case plot.includes ("italy" || "italian"):
+        case plot.includes ("italy" || "italian" || "renaissance" || "italia" || "rome"):
             mainIngr = "amaretto";
             break;
         case plot.includes ("russian" || "russia" || "soviet" || "USSR"):
             mainIngr = "vodka"
             break;
-        case plot.includes ("french" || "france"):
+        case plot.includes ("french" || "france" || "paris"):
             mainIngr = "cognac";
             break;
         case plot.includes("chinese" || "china" || "cantonese" || "mandarin"):
@@ -168,7 +168,7 @@ var checkKeywords = function() {
         case plot.includes("southern"):
             mainIngr = "bourbon";
             break;
-        case plot.includes ("british"):
+        case plot.includes ("british" || "britain" || "wales" || "welsh"):
             mainIngr = "brandy";
             break;
         default: break;
@@ -185,10 +185,10 @@ var checkKeywords = function() {
         case plot.includes("crime"):
             secondIngr = "bitters";
             break;
-        case plot.includes("fantasy"):
+        case plot.includes("fantasy" || "fantastical"):
             secondIngr = "champagne";
             break;
-        case plot.includes("romance"):
+        case plot.includes("romance" || "romantic comedy" || "rom-com"):
             secondIngr = "sugar";
             break;
         case plot.includes("science fiction"):
