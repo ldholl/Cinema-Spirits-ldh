@@ -13,7 +13,7 @@ var pastSearchesEl = document.querySelector(".past-searchlist")
 
 
 //API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 k_g17k88h4 Jonathan: k_hm16evk8
-apiKey = "k_g17k88h4"
+apiKey = "k_hm16evk8"
 
 
 //cocktailDB key 9973533
@@ -145,7 +145,7 @@ var checkKeywords = function() {
     mainIngr = "";
     switch (true){
         case plot.includes("japan" || "japanese" || "anime" || "tokyo"):
-            mainIngr = "Midori melon liqueur"; // sake was not an ingredient listed in the API, subbed for Midori for the next closest Japan-related ingredient
+            mainIngr = "midori_melon_liqueur"; // sake was not an ingredient listed in the API, subbed for Midori for the next closest Japan-related ingredient
             break;
         case plot.includes ("italy" || "italian" || "renaissance" || "italia" || "rome"):
             mainIngr = "amaretto";
@@ -237,10 +237,10 @@ if (secondIngr === ""){
 else if(mainIngr === ""){
     cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + secondIngr
 }
-else if (mainIngr ==="" && secondIngr === ""){
+else if (mainIngr === "" && secondIngr === ""){
     cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/random.php"
+    console.log("no keyword matches")
 }
-
 else {cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + mainIngr + "," + secondIngr}
 
 console.log(cocktailApi);
@@ -250,10 +250,11 @@ console.log(cocktailApi);
         response.json().then(function(data){
         //add in if statement for empty returns ****
         console.log(data);
-        console.log(data.drinks.length)
         var drinkId 
+
     //if multiple matches, display random drink from returned list
-        if (data.drinks.length > 1){
+
+         if (data.drinks.length > 1){
             var randNo = Math.floor(Math.random() * data.drinks.length + 1 )
             console.log(data.drinks[0]);
             drinkId = data.drinks[randNo].idDrink;
@@ -262,6 +263,12 @@ console.log(cocktailApi);
             drinkId = data.drinks[0].idDrink;
         }
         console.log(drinkId)
+        if (drinkId === undefined){
+            console.log("no drink matches");
+            mainIngr = "rum";
+            secondIngr = "";
+            getDrink(); 
+        }
         setPage(drinkId);
         
         })
@@ -282,7 +289,7 @@ var setPage = function(drinkId){
 
         var containerEl = document.getElementById("holder");
         document.body.style.backgroundImage = "url('https://images.pexels.com/photos/3391752/pexels-photo-3391752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')"
-        containerEl.className = "columns is-centered is-vcentered";
+        containerEl.className = "columns final-holder is-centered is-vcentered";
 
     var imageCard = document.createElement("div");
     imageCard.className = "column is-4 poster-card";
@@ -324,7 +331,7 @@ var setPage = function(drinkId){
     cardImgEl.appendChild(drinkEl);
 
     var ingredientsEl = document.createElement("ul");
-    ingredientsEl.innerText = "Ingredients: ";
+    ingredientsEl.innerText = "Ingredients:   ";
     ingredientsEl.className = "Ingredients"
     drinkCardEl.appendChild(ingredientsEl);
 
@@ -336,26 +343,26 @@ var setPage = function(drinkId){
     }
     if (drinkInfo[0].strIngredient2 !== null){
         var ingredient2 = document.createElement("li");
-        ingredient2.innerText = drinkInfo[0].strIngredient2;
+        ingredient2.innerText = ", " + drinkInfo[0].strIngredient2;
         ingredient2.className = "ingredient-item"
         ingredientsEl.appendChild(ingredient2);
     }
     if (drinkInfo[0].strIngredient3 !== null){
         var ingredient3 = document.createElement("li");
-        ingredient3.innerText = drinkInfo[0].strIngredient3;
+        ingredient3.innerText = ", " + drinkInfo[0].strIngredient3;
         ingredient3.className = "ingredient-item"
         ingredientsEl.appendChild(ingredient3);
     }
     if (drinkInfo[0].strIngredient4 !== null){
         var ingredient4 = document.createElement("li");
-        ingredient4.innerText = drinkInfo[0].strIngredient4;
+        ingredient4.innerText = ", " + drinkInfo[0].strIngredient4;
         ingredient4.className = "ingredient-item"
         ingredientsEl.appendChild(ingredient4)
         
     }
     if (drinkInfo[0].strIngredient5 !== null){
     var ingredient5 = document.createElement("li");
-    ingredient5.innerText = drinkInfo[0].strIngredient5;
+    ingredient5.innerText = ", " + drinkInfo[0].strIngredient5;
     ingredient5.className = "ingredient-item"
     ingredientsEl.appendChild(ingredient5)
    }
@@ -364,13 +371,24 @@ var setPage = function(drinkId){
    recipeEl.innerText = drinkInfo[0].strInstructions;
    recipeEl.id = "recipe"
 
-   drinkCardEl.appendChild(recipeEl)
+   drinkCardEl.appendChild(recipeEl);
 
+   var reloader = document.createElement("button");
+   reloader.type = "submit"
+   reloader.innerText = "Refresh";
+   reloader.id = "reloadBtn";
+   
+   var fullDoc =document.querySelector("body");
+    fullDoc.prepend(reloader);
         })
     })
 }
 
-/*
+$("#reloadBtn").on("click", function(){
+    console.log("click")
+    document.reload()
+})
+
 var listPastSearch = function(keySearch) {
     // Does not list searched movie if already previously searched
     if (searches.includes(keySearch)) {
@@ -399,7 +417,7 @@ var loadSearches = function() {
     for (var i = 0; i <savedSearches.length; i++) {
         listPastSearch(savedSearches[i]);
     }
+
 };
     
 loadSearches();
-*/

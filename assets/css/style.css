@@ -99,12 +99,8 @@ color: black;
 }
 
 
-#holder{
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-position: center;
-
-
+.final-holder {
+justify-content: center;
 }
 
 .poster-card {
@@ -159,17 +155,22 @@ background-color: rgba(244, 244, 245, 0.845);
 border-radius: 5px;
 margin-top: 5px;
 padding: 5px;
+overflow: hidden;
 }
 
 .ingredients {
 color: black;
 border-bottom: black 2px solid;
-font-family: "Inconsolata"
+font-family: "Inconsolata";
+list-style-type: circle;
+display: inline;
 }
 
 .ingredient-item {
   font-family: "Inconsolata";
   text-shadow: none;
+  list-style-type: circle;
+  display: inline
 }
 
 /* Media Queries */
