@@ -1,8 +1,8 @@
 # movie-night
-Movie Night w/ Paired Cocktail &amp; More?
+Cinematic Spirits
 
 ## Purpose
-An application to match a user's chosen film or a randomly generated film to a thematically appropriate cocktail by matching keywords from the film's plot to drink ingredients.
+An application that matches a user's chosen film or a randomly generated film to a thematically appropriate cocktail by matching keywords from the film's plot to drink ingredients.
 
 
 ## Built With
@@ -15,7 +15,7 @@ An application to match a user's chosen film or a randomly generated film to a t
 
 
 ## Deployment Screenshot
-![Deployed Screenshot]()
+![Deployment Video](assets/images/Cinematic%20Spirits.webm)
 
 ## Contribution
 Made by Jonathan Arevalo and Lacy Holleman
