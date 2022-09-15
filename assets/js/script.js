@@ -14,12 +14,12 @@ var pastSearchesEl = document.querySelector(".past-searchlist")
 
 
 //API keys: Lacy: k_766k6kjr Lacy Alt: k_ag013nc0 k_g17k88h4 k_k97mdcmz Jonathan: k_hm16evk8
-apiKey = "k_g17k88h4"
+apiKey = "k_766k6kjr"
 
 
 //cocktailDB key 9973533
 
-//Event listener and function for button click **NOTE: might want to add alert for empty clicks
+//Event listener and function for button click 
 $("#searchBtn").on("click", function (event){
     event.preventDefault();    
     keySearch = $(this).siblings("input").val();
@@ -29,6 +29,7 @@ $("#searchBtn").on("click", function (event){
     getMovieId(keySearch);  
 });
 
+//Random movie search
 $("#randomBtn").on("click", function(event){
     event.preventDefault();
     $(".hero").remove();
@@ -36,7 +37,7 @@ $("#randomBtn").on("click", function(event){
     randomMovie();
 })
 
-
+//Fetch movies from user's input
 var getMovieId = function(){
     var searchUrl = "https://imdb-api.com/en/API/SearchMovie/" + apiKey + "/" + keySearch;
 
@@ -56,7 +57,7 @@ var getMovieId = function(){
 };
 
 
-//Function to get the movie ids and posters
+//Function to get the movie ids and posters to display
 var showMovies = function(){
 
     var posterContainerEl = document.getElementById("posters");
@@ -87,6 +88,7 @@ var showMovies = function(){
     }
 }
 
+//Function to fetch random movie
 var randomMovie = function(){
     var randomMovieUrl = "https://imdb-api.com/en/API/Top250Movies/" + apiKey
     fetch(randomMovieUrl).then(function(response){
@@ -96,35 +98,35 @@ var randomMovie = function(){
             imdbId = data.items[randNo].id;
            
             
-
+            //Then fetch the random movie's plot
             var apiUrl = "https://imdb-api.com/en/API/Wikipedia/" + apiKey + "/" + imdbId;
             fetch(apiUrl).then(function(response){
                 response.json().then(function(data){
                     plot = data.plotShort.plainText;
                     plot = plot.toLowerCase();
-
+            //Then get the movie's poster
             var randomPosterUrl = "https://imdb-api.com/API/Posters/" + apiKey + "/" + imdbId;
             fetch(randomPosterUrl).then(function(response){
                 response.json().then(function(data){
                     var posterObj = data.posters[0];
                     console.log(posterObj)
+                    //If there is no poster returned, display 'no image available'
                     if (posterObj === undefined){
                         finalPoster = document.createElement("img");
-                        finalPoster.src = "assets/images/sad-cat.png"
+                        finalPoster.src ="https://64.media.tumblr.com/b33e159bd01f610ec43cc9995cc188bc/a085049e26e857c4-cf/s1280x1920/73f7334595c0a072311a428a74acf9de627f013f.pnj";
                     }
                     else {finalPoster = posterObj["link"]}
 
                     checkKeywords();
                 })
-            })
-
-                    
+            })       
                 })
             })
         })
     })
 }
-//Retrieves the plot of the movie in an object. We can later edit this function to only return the "short" or "long" plot, depending on what we need. *Note to self: add a call to the function
+
+//Retrieves the plot of the movie in an object.
 
 var getMoviePlot = function(imdbId){
     //format api url
@@ -166,14 +168,10 @@ $(document).on("click" , function() {
 //listener for submit
 $(".modal-submit").on("click", function(){
     $(".modal").removeClass("is-active");
-     
-    
-    console.log("click");
-    //location.href = "drink-movie.html";
+//removes most of the html so poster and drink can display
     $(".hero").remove();
     $("#posters").remove();
-   
-    //checkKeywords();
+
     checkKeywords();
     
 })
@@ -181,6 +179,7 @@ $(".modal-submit").on("click", function(){
 var mainIngr
 var secondIngr
 
+//Check specified keywords against short plot
 var checkKeywords = function() {
     
     plot.split(" ");
@@ -273,7 +272,7 @@ var checkKeywords = function() {
     getDrink(mainIngr, secondIngr);
 };
 
-
+//Fetches Drinks from cocktailDB
 var getDrink = function() {
 
     console.log("fetching drinks")
@@ -287,6 +286,7 @@ if (secondIngr === ""){
 else if(mainIngr === ""){
     cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + secondIngr
 }
+//if there were no matches, get random cocktail
 else if (mainIngr === "" && secondIngr === ""){
     cocktailApi = "https://www.thecocktaildb.com/api/json/v2/9973533/random.php"
     console.log("no keyword matches")
@@ -313,9 +313,10 @@ console.log(cocktailApi);
             drinkId = data.drinks[0].idDrink;
         }
         console.log(drinkId)
+        //If there were matching keywords but no cocktails with that combination, randomly get a vodka drink
         if (drinkId === undefined){
             console.log("no drink matches");
-            mainIngr = "rum";
+            mainIngr = "vodka";
             secondIngr = "";
             getDrink(); 
         }
@@ -325,7 +326,7 @@ console.log(cocktailApi);
     })
 }
 
-
+//Sets the html to display poster and drink info
 var setPage = function(drinkId){
     console.log("setting page")
    
@@ -434,11 +435,13 @@ var setPage = function(drinkId){
     })
 }
 
+//Reload button listener
 $("body").on("click", "#reloadBtn",function(){
     console.log("click")
     document.location.reload()
 })
 
+//Function to display saved searches
 var listPastSearch = function(keySearch) {
     // Does not list searched movie if already previously searched
     if (searches.includes(keySearch)) {
@@ -451,6 +454,7 @@ var listPastSearch = function(keySearch) {
     pastSearchesEl.appendChild(searchedMovieEl);
 };
 
+//Function to save searches
 var saveSearches = function () {
     localStorage.setItem("searched-movies", JSON.stringify(searches));
 };
