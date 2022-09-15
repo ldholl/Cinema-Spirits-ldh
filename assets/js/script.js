@@ -107,7 +107,12 @@ var randomMovie = function(){
             fetch(randomPosterUrl).then(function(response){
                 response.json().then(function(data){
                     var posterObj = data.posters[0];
-                    finalPoster = posterObj["link"]
+                    console.log(posterObj)
+                    if (posterObj === undefined){
+                        finalPoster = document.createElement("img");
+                        finalPoster.src = "assets/images/sad-cat.png"
+                    }
+                    else {finalPoster = posterObj["link"]}
 
                     checkKeywords();
                 })
@@ -189,10 +194,13 @@ var checkKeywords = function() {
         case plot.includes ("italy" || "italian" || "renaissance" || "italia" || "rome"):
             mainIngr = "amaretto";
             break;
-        case plot.includes ("russian" || "russia" || "soviet" || "USSR" || "berlin"):
+        case plot.includes ("russian" || "russia" || "soviet" || "ussr" || "berlin"):
             mainIngr = "vodka";
             break;
-        case plot.includes ("french" || "france" || "paris" || "eiffel tower"):
+        case plot.includes("mexico" || "mexican" || "western"):
+            mainIngr = "tequila";
+            break;
+        case plot.includes ("french" || "france" || "paris" || "eiffel-tower"):
             mainIngr = "cognac";
             break;
         case plot.includes ("german"):
@@ -241,6 +249,9 @@ var checkKeywords = function() {
         case plot.includes("historical"):
             secondIngr = "cinnamon";
             break;
+        case plot.includes("comedy"):
+            secondIngr = "soda_water";
+            break;
         case plot.includes("crime"):
             secondIngr = "bitters";
             break;
@@ -250,7 +261,7 @@ var checkKeywords = function() {
         case plot.includes("romance" || "romantic"):
             secondIngr = "sugar";
             break;
-        case plot.includes("science-fiction"):
+        case plot.includes("science-fiction" || "sci-fi"):
             secondIngr = "sour";
         case plot.includes("biographical"):
             secondIngr = "champagne";

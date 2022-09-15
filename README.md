@@ -1,41 +1,21 @@
 # movie-night
 Movie Night w/ Paired Cocktail &amp; More?
 
-
-Language:
-British
-Spanish
-Japanese
-Itialian
-French
-Chinese
-Russian
-Portuguese
-Indian
-German
+## Purpose
+An application to match a user's chosen film or a randomly generated film to a thematically appropriate cocktail by matching keywords from the film's plot to drink ingredients.
 
 
-Default
+## Built With
+* HTML
+* CSS
+* JavaScript
+* Bulma
 
-Liquors
+## Website
 
-Whisky (American, Irish)
-Rum (portuguese)
-Vodka
-Gin (
-Tequila (Spanish, Mexican)
-Brandy (British)
-Absinthe (psysological, mystery)
-Amaretto (Italian)
-Aperol
-Amaro (
-Campari
-Sake (Japanese, Anime)
-Midori(Japanese)
-Creme (
-Coffee 
-Jagermeister (German, Action)
-Irish Cream (Irish, )
-Limoncello
-Schnapps (British)
-Wine (French, Italian)
+
+## Deployment Screenshot
+![Deployed Screenshot]()
+
+## Contribution
+Made by Jonathan Arevalo and Lacy Holleman
