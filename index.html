@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Limelight&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+<title>Cinematic Spirits</title>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+    <h1 class="title">Cinematic Spirits</h1> 
+    <form id="movie-search">
+      <p>Can't decide on something thematic to sip while you enjoy your favorite movie? Want both your entertainment and refreshment decided on for you? We're here to help.</p>
+      <input list="past-searches" type="text">
+      <datalist id="past-searches" class="past-searchlist">
+        <!-- Past searches go here -->
+      </datalist>
+      <br>
+      <button id="searchBtn" type="submit" class="submit-btn">Search</button><br>
+      <p style="margin-left: 75px">or</p>
+      <button id="randomBtn" type="submit" class="submit-btn">Decide For Me</button>
+    </form>
+  </div>
+  </section>
+  <main id="holder">
+    <div id="posters" class="columns is-mobile is-multiline">
+      <!--Poster images go here-->
+    </div>
+
+</main>
+<!--MODAL-->
+<div id="movie-modal" class="modal">
+  <div id="modal-background"></div>
+  <div class="modal-card">
+    <header class = "modal-card-head">
+      <p class ="modal-card-title"></p>
+    </header>
+    <section class="modal-card-body">
+    <p class= "movie-plot"></p>
+    </section>
+    <footer class="modal-card-foot">
+    <button class="modal-close"></button>
+    <button class="modal-submit">Go</button>
+    </footer>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="assets/js/script.js"></script>
+
+
+</body>
+</html>
